@@ -1,4 +1,4 @@
-![banner](https://raw.github.com/PhilJay/MPChart/master/design/feature_graphic_smaller.png)
+![banner](https://raw.github.com/thuryn/MPChart/master/design/feature_graphic_smaller.png)
 
 [![Release](https://img.shields.io/github/release/PhilJay/MPAndroidChart.svg?style=flat)](https://jitpack.io/#PhilJay/MPAndroidChart)
 [![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
@@ -8,7 +8,7 @@
 
 :zap: A powerful & easy to use chart library for Android :zap:
 
-[**Charts**](https://github.com/danielgindi/Charts) is the iOS version of this library
+This library has been developed by PhilJay.
 
 ## Table of Contents
 1. [Quick Start](#quick-start)
@@ -48,7 +48,7 @@ dependencies {
 <dependency>
     <groupId>com.github.PhilJay</groupId>
     <artifactId>MPAndroidChart</artifactId>
-    <version>v3.1.0</version>
+    <version>v4.0.0</version>
 </dependency>
 ```
 
@@ -64,9 +64,7 @@ See the [**javadocs**](https://jitpack.io/com/github/PhilJay/MPAndroidChart/v3.1
 
 <h2 id="examples">Examples :eyes:</h2>
 
-Download the [MPAndroidChart Example App](https://play.google.com/store/apps/details?id=com.xxmassdeveloper.mpchartexample) or look at the [source code](https://github.com/PhilJay/MPAndroidChart/tree/master/MPChartExample).
-
-[![ScreenShot](https://github.com/PhilJay/MPAndroidChart/blob/master/design/video_thumbnail.png)](https://www.youtube.com/watch?v=ufaK_Hd6BpI)
+Download the [MPAndroidChart Example App](https://play.google.com/store/apps/details?id=org.thosp.mpchartexample) or look at the [source code](https://github.com/PhilJay/MPAndroidChart/tree/master/MPChartExample).
 
 <br/>
 
@@ -75,32 +73,6 @@ Download the [MPAndroidChart Example App](https://play.google.com/store/apps/det
 This repository's issue tracker is only for bugs and feature requests. The maintainers ask that you refrain from asking questions about how to use MPAndroidChart through the issue tracker.
 
 Please read the [**documentation**](https://weeklycoding.com/mpandroidchart/) first, then ask all your questions on [stackoverflow.com](https://stackoverflow.com/questions/tagged/mpandroidchart) for the fastest answer.
-
-<br/>
-
-<h2 id="donate">Donations :heart:</h2>
-
-**This project needs you!** If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, **feel free to donate**. Your donation is highly appreciated (and I love food, coffee and beer). Thank you!
-
-**PayPal**
-
-- [**Donate 5 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7G52RA87ED8NY): Thank's for creating this project, here's a coffee (or some beer) for you!
-- [**Donate 10 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4C9TPE67F5PUQ): Wow, I am stunned. Let me take you to the movies!
-- [**Donate 15 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YKMPTFMVK3JMC): I really appreciate your work, let's grab some lunch!
-- [**Donate 25 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H9JA4QX7UHXCY): That's some awesome stuff you did right there, dinner is on me!
-- Or you can also [**choose what you want to donate**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGBENAC5XBCKS), all donations are awesome!
-
-<br/>
-
-<h2 id="social">Social Media :fire:</h2>
-
-If you like this library, please tell others about it :two_hearts: :two_hearts:
-
-[![Share on Twitter](https://github.com/PhilJay/MPAndroidChart/blob/master/design/twitter_icon.png)](https://twitter.com/intent/tweet?text=Check%20out%20the%20awesome%20MPAndroidChart%20library%20on%20Github:%20https://github.com/PhilJay/MPAndroidChart)
-[![Share on Google+](https://github.com/PhilJay/MPAndroidChart/blob/master/design/googleplus_icon.png)](https://plus.google.com/share?url=https://github.com/PhilJay/MPAndroidChart)
-[![Share on Facebook](https://github.com/PhilJay/MPAndroidChart/blob/master/design/facebook_icon.png)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/PhilJay/MPAndroidChart)
-
-If you like, you can follow me on Twitter [**@PhilippJahoda**](https://twitter.com/PhilippJahoda).
 
 <br/>
 
@@ -176,7 +148,7 @@ If you like, you can follow me on Twitter [**@PhilippJahoda**](https://twitter.c
 
 <h1 id="license">License :page_facing_up:</h1>
 
-Copyright 2020 Philipp Jahoda
+Copyright 2022 Tomas Huryn
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -196,6 +168,7 @@ limitations under the License.
 
 These people rock!
 
+* [PhilJay] (https://github.com/PhilJay) - Philipp Jahoda
 - [danielgindi](https://github.com/danielgindi) - Daniel Gindi
 - [mikegr](https://github.com/mikegr) - Michael Greifeneder
 - [tony](https://github.com/tonypatino-monoclesociety) - Tony
