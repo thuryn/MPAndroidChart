@@ -377,13 +377,17 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                 // make sure the lines don't do shitty things outside
                 // bounds
-                if (!mViewPortHandler.isInBoundsLeft(lastCoordinateX) ||
+                /*if (!mViewPortHandler.isInBoundsLeft(lastCoordinateX) ||
                         !mViewPortHandler.isInBoundsTop(Math.max(firstCoordinateY, lastCoordinateY)) ||
                         !mViewPortHandler.isInBoundsBottom(Math.min(firstCoordinateY, lastCoordinateY)))
-                    continue;
+                    continue;*/
 
                 // get the color that is set for this line-segment
-                mRenderPaint.setColor(dataSet.getColor(j));
+                if (dataSet.getEntryForIndex(j).getY() > 0) {
+                    mRenderPaint.setColor(dataSet.getColor(0));
+                } else {
+                    mRenderPaint.setColor(dataSet.getColor(1));
+                }
 
                 canvas.drawLines(mLineBuffer, 0, pointsPerEntryPair * 2, mRenderPaint);
             }
