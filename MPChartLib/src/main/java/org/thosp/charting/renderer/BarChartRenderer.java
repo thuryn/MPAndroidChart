@@ -252,23 +252,23 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
                         float x = (buffer.buffer[j] + buffer.buffer[j + 2]) / 2f;
 
-                        if (!mViewPortHandler.isInBoundsRight(x))
+                        /*if (!mViewPortHandler.isInBoundsRight(x))
                             break;
 
                         if (!mViewPortHandler.isInBoundsY(buffer.buffer[j + 1])
                                 || !mViewPortHandler.isInBoundsLeft(x))
-                            continue;
+                            continue;*/
 
                         BarEntry entry = dataSet.getEntryForIndex(j / 4);
                         float val = entry.getY();
 
-                        if (dataSet.isDrawValuesEnabled()) {
+                        //if (dataSet.isDrawValuesEnabled()) {
                             drawValue(c, dataSet.getValueFormatter(), val, entry, i, x,
                                     val >= 0 ?
                                             (buffer.buffer[j + 1] + posOffset) :
                                             (buffer.buffer[j + 3] + negOffset),
                                     dataSet.getValueTextColor(j / 4));
-                        }
+                        //}
 
                         if (entry.getIcon() != null && dataSet.isDrawIconsEnabled()) {
 
@@ -314,12 +314,12 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                         // in between
                         if (vals == null) {
 
-                            if (!mViewPortHandler.isInBoundsRight(x))
+                            /*if (!mViewPortHandler.isInBoundsRight(x))
                                 break;
 
                             if (!mViewPortHandler.isInBoundsY(buffer.buffer[bufferIndex + 1])
                                     || !mViewPortHandler.isInBoundsLeft(x))
-                                continue;
+                                continue;*/
 
                             if (dataSet.isDrawValuesEnabled()) {
                                 drawValue(c, dataSet.getValueFormatter(), entry.getY(), entry, i, x,
@@ -386,12 +386,12 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                                 float y = transformed[k + 1]
                                         + (drawBelow ? negOffset : posOffset);
 
-                                if (!mViewPortHandler.isInBoundsRight(x))
+                                /*if (!mViewPortHandler.isInBoundsRight(x))
                                     break;
 
                                 if (!mViewPortHandler.isInBoundsY(y)
                                         || !mViewPortHandler.isInBoundsLeft(x))
-                                    continue;
+                                    continue;*/
 
                                 if (dataSet.isDrawValuesEnabled()) {
                                     drawValue(c,

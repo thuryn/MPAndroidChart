@@ -294,9 +294,6 @@ public class LineChartRenderer extends LineRadarRenderer {
 
         int entryCount = dataSet.getEntryCount();
 
-        final boolean isDrawSteppedEnabled = dataSet.isDrawSteppedEnabled();
-        final int pointsPerEntryPair = isDrawSteppedEnabled ? 4 : 2;
-
         Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
 
         float phaseY = mAnimator.getPhaseY();
@@ -321,40 +318,58 @@ public class LineChartRenderer extends LineRadarRenderer {
 
         // more than 1 color
         if (dataSet.getColors().size() > 1) {
+            if (mLineBuffer.length <= 4)
+                mLineBuffer = new float[4];
 
-            int numberOfFloats = pointsPerEntryPair * 2;
-
-            if (mLineBuffer.length <= numberOfFloats)
-                mLineBuffer = new float[numberOfFloats * 2];
-
-            int max = mXBounds.min + mXBounds.range;
+            long max = mXBounds.min + mXBounds.range;
 
             for (int j = mXBounds.min; j < max; j++) {
 
-                Entry e = dataSet.getEntryForIndex(j);
-                if (e == null) continue;
+                Entry entryFrom = dataSet.getEntryForIndex(j);
+                Entry entryTo = null;
+                if (entryFrom == null) continue;
 
-                mLineBuffer[0] = e.getX();
-                mLineBuffer[1] = e.getY() * phaseY;
+                mLineBuffer[0] = entryFrom.getX();
+                mLineBuffer[1] = entryFrom.getY() * phaseY;
 
                 if (j < mXBounds.max) {
 
-                    e = dataSet.getEntryForIndex(j + 1);
+                    entryTo = dataSet.getEntryForIndex(j + 1);
 
-                    if (e == null) break;
+                    if (entryTo == null) break;
 
-                    if (isDrawSteppedEnabled) {
-                        mLineBuffer[2] = e.getX();
-                        mLineBuffer[3] = mLineBuffer[1];
-                        mLineBuffer[4] = mLineBuffer[2];
-                        mLineBuffer[5] = mLineBuffer[3];
-                        mLineBuffer[6] = e.getX();
-                        mLineBuffer[7] = e.getY() * phaseY;
+                    float toY = entryTo.getY();
+                    float toX = entryTo.getX();
+
+                    /*if (secondPartX == null) {
+                        boolean startsNegative = entryFrom.getY() < 0;
+                        boolean endsNegative = entryTo.getY() < 0;
+
+                        float deltaX = toX - entryFrom.getX();
+                        float deltaY = toY - entryFrom.getY();
+                        double prepona = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+                        double alpha = Math.acos(deltaX/prepona);
+
+                        if (startsNegative && !endsNegative) {
+                            toY = 0;
+                            float newDeltaY = Math.abs(entryFrom.getY());
+                            toX = entryFrom.getX()  + (float) (newDeltaY / Math.sin(alpha));
+                            secondPartX = toX;
+                            color = dataSet.getColor(1);
+                        } else if  (!startsNegative && endsNegative) {
+                            toY = 0;
+                            toX = entryFrom.getX() + (float) (entryFrom.getY() / Math.sin(alpha));
+                            secondPartX = toX;
+                            color = dataSet.getColor(0);
+                        }
                     } else {
-                        mLineBuffer[2] = e.getX();
-                        mLineBuffer[3] = e.getY() * phaseY;
-                    }
+                        mLineBuffer[0] = secondPartX;
+                        mLineBuffer[1] = 0;
+                        secondPartX = null;
+                    }*/
 
+                    mLineBuffer[2] = toX;
+                    mLineBuffer[3] = toY * phaseY;
                 } else {
                     mLineBuffer[2] = mLineBuffer[0];
                     mLineBuffer[3] = mLineBuffer[1];
@@ -363,8 +378,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                 // Determine the start and end coordinates of the line, and make sure they differ.
                 float firstCoordinateX = mLineBuffer[0];
                 float firstCoordinateY = mLineBuffer[1];
-                float lastCoordinateX = mLineBuffer[numberOfFloats - 2];
-                float lastCoordinateY = mLineBuffer[numberOfFloats - 1];
+                float lastCoordinateX = mLineBuffer[2];
+                float lastCoordinateY = mLineBuffer[3];
 
                 if (firstCoordinateX == lastCoordinateX &&
                         firstCoordinateY == lastCoordinateY)
@@ -372,8 +387,8 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                 trans.pointValuesToPixel(mLineBuffer);
 
-                if (!mViewPortHandler.isInBoundsRight(firstCoordinateX))
-                    break;
+                /*if (!mViewPortHandler.isInBoundsRight(firstCoordinateX))
+                    break;*/
 
                 // make sure the lines don't do shitty things outside
                 // bounds
@@ -381,21 +396,29 @@ public class LineChartRenderer extends LineRadarRenderer {
                         !mViewPortHandler.isInBoundsTop(Math.max(firstCoordinateY, lastCoordinateY)) ||
                         !mViewPortHandler.isInBoundsBottom(Math.min(firstCoordinateY, lastCoordinateY)))
                     continue;*/
-
-                // get the color that is set for this line-segment
-                if (dataSet.getEntryForIndex(j).getY() > 0) {
-                    mRenderPaint.setColor(dataSet.getColor(0));
-                } else {
-                    mRenderPaint.setColor(dataSet.getColor(1));
+                int color = 0;
+                if (entryTo != null) {
+                    if (entryTo.getY() > 0) {
+                        color = dataSet.getColor(0);
+                    } else if (entryTo.getY() < 0) {
+                        color = dataSet.getColor(1);
+                    }
                 }
-
-                canvas.drawLines(mLineBuffer, 0, pointsPerEntryPair * 2, mRenderPaint);
+                if (color == 0){
+                    if (entryFrom.getY() > 0) {
+                        color = dataSet.getColor(0);
+                    } else {
+                        color = dataSet.getColor(1);
+                    }
+                }
+                mRenderPaint.setColor(color);
+                canvas.drawLines(mLineBuffer, 0, 4, mRenderPaint);
             }
 
         } else { // only one color per dataset
 
-            if (mLineBuffer.length < Math.max((entryCount) * pointsPerEntryPair, pointsPerEntryPair) * 2)
-                mLineBuffer = new float[Math.max((entryCount) * pointsPerEntryPair, pointsPerEntryPair) * 4];
+            if (mLineBuffer.length < Math.max((entryCount) * 4, 4) * 2)
+                mLineBuffer = new float[Math.max((entryCount) * 4, 4) * 4];
 
             Entry e1, e2;
 
@@ -413,14 +436,6 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                     mLineBuffer[j++] = e1.getX();
                     mLineBuffer[j++] = e1.getY() * phaseY;
-
-                    if (isDrawSteppedEnabled) {
-                        mLineBuffer[j++] = e2.getX();
-                        mLineBuffer[j++] = e1.getY() * phaseY;
-                        mLineBuffer[j++] = e2.getX();
-                        mLineBuffer[j++] = e1.getY() * phaseY;
-                    }
-
                     mLineBuffer[j++] = e2.getX();
                     mLineBuffer[j++] = e2.getY() * phaseY;
                 }
@@ -428,7 +443,7 @@ public class LineChartRenderer extends LineRadarRenderer {
                 if (j > 0) {
                     trans.pointValuesToPixel(mLineBuffer);
 
-                    final int size = Math.max((mXBounds.range + 1) * pointsPerEntryPair, pointsPerEntryPair) * 2;
+                    final int size = Math.max((mXBounds.range + 1) * 2, 2) * 2;
 
                     mRenderPaint.setColor(dataSet.getColor());
 
